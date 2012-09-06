@@ -1,6 +1,6 @@
 <?php
-$diff = $project_info_q->row()->diff;
-$status = $project_info_q->row()->status;
+$diff = $info_q->row()->Difficulty;
+$status = $info_q->row()->Status;
 if ($diff == 0) {
 	$diff = '???';
 	$diff_color = 'info';
@@ -34,8 +34,8 @@ switch ($status){
 		<div class="row-fluid">
 			<div class="span5 offset1">
 				<div class="page-header">
-					<h1><?php echo $project_info_q->row()->project_name ?></h1>
-					<p><?php echo $project_info_q->row()->info ?></p>
+					<h1><?php echo $info_q->row()->Project_Name ?></h1>
+					<p><?php echo $info_q->row()->Info ?></p>
 				</div>
 			</div>
 			<div class="span4 offset2">
@@ -43,9 +43,8 @@ switch ($status){
 				<button class="btn btn-large btn-block disabled btn-<?php echo $diff_color ?>" type="button"><strong><?php echo $diff ?></strong></button>
 				<br />
 				<h2>Work Force</h2>
-				<p><?php echo $project_info_q->row()->work_force ?></p>
+				<p><?php echo $info_q->row()->Credit ?></p>
 			</div>
 		</div>
-
 	</div>
 </div>

@@ -9,6 +9,7 @@ class Home extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->view('header',$webdata);
 		$this->load->view('menu',$webdata);
+		$this->load->view('homeview');
 		$this->load->view('footer');
 	}
 }
