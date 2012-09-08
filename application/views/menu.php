@@ -12,12 +12,12 @@
 			<li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Project View<b class="caret"></b></a>
 				<ul class="dropdown-menu">
-				<li><?php echo anchor('projects/viewall','View All') ?></li>
+					<li><?php echo anchor('projects/viewall','View All') ?></li>
 					<li><a href="#">My Projects</a></li>
 					<li><a href="#">Advanced Project Search</a></li>
 				</ul>
 			</li>
-			<li><a href="#">New Project</a></li>
+			<li><?php echo anchor('projects/NewProject','New Project') ?></li>
 		</ul>
 		<ul class="nav pull-right">
 			<li>

@@ -26,6 +26,13 @@ class projects extends CI_Controller {
 		$this->load->view('viewall',$this->data);
 		$this->load->view('footer');
 	}
+	public function NewProject(){
+		$this->data['page_title'] = 'New';
+		$this->load->view('header',$this->data);
+		$this->load->view('menu',$this->data);
+		//$this->load->view('newview',$this->data);
+		$this->load->view('footer');
+	}
 	public function view($project_name){
 		$name = urldecode($project_name);
 		$this->data['info_q'] = $this->db->get_where('Project_Ideas',array('Project_Name'=>$name));
