@@ -30,8 +30,14 @@ class projects extends CI_Controller {
 		$this->data['page_title'] = 'New';
 		$this->load->view('header',$this->data);
 		$this->load->view('menu',$this->data);
-		//$this->load->view('newview',$this->data);
+		$this->load->view('newview',$this->data);
 		$this->load->view('footer');
+	}
+	public function projectSummit(){
+	}
+	public function projectDeny(){
+	}
+	public function projectAccept(){
 	}
 	public function view($project_name){
 		$name = urldecode($project_name);
@@ -42,6 +48,7 @@ class projects extends CI_Controller {
 			$this->load->view('header',$this->data);
 			$this->load->view('menu',$this->data);
 			$this->load->view('projectview',$this->data);
+			//
 			$this->load->view('footer');
 		}
 		else{
