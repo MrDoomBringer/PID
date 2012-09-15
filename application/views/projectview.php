@@ -21,6 +21,9 @@ switch ($status){
 	case "Done":
 		$status_color = 'success';
 		break;
+	case "Idea":
+		$status_color = 'info';
+		break;
 	case "Planning":
 		$status_color = 'info';
 		break;
@@ -76,7 +79,22 @@ function hreffix($string){
 						}
 					}
 				?>
+				<h3>Committee</h3>
+				<?php
+					if(empty($info_q->row()->Committee)){
+						echo '<p>No relevant committee</p>';
+					}else{
+						$committee = preg_replace('/[\{\}]/','',$info_q->row()->Committee);
+						echo '<p>'.$committee.'</p>';
+					}
+				?>
 			</div>
+		</div>
+		<div class='container-fluid'>
+			<?php $time = $info_q->row()->Modified;
+					$time = date_create($time);
+			?>
+			<p><small>Last Modified - <?php echo date_format($time, 'H:i (d-m-y)') ?></small></p>
 		</div>
 	</div>
 	<div class="row-fluid">

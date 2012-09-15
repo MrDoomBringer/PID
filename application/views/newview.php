@@ -39,8 +39,9 @@
 		<br />
 		<select name="status">
 			<option>In Progress</option>
-			<option>Done</option>
+			<option>Idea</option>
 			<option>Planning</option>
+			<option>Done</option>
 			<option>Abandonded</option>
 		</select>
 		<br />
