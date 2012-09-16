@@ -67,7 +67,24 @@ class projects extends CI_Controller {
 	}
 	public function projectAccept(){
 	}
+	public function addComment(){
+		$data = array('User_Name' => $this->data['username']);
+		if(empty($_POST['comment'])){
+			$data['Comment'] = NULL;
+		}else{
+			$data['Comment'] = $_POST['comment'];
+		}
+		if(empty($_POST['like'])){
+			$data['Like'] = NULL;
+		}else{
+			$data['Like'] = $_POST['like'];
+		}
+		$data['Project_Name'] = preg_replace('/projects\/view\//','',$_POST['webpage']);
+		$this->db->insert('Project_Comments',$data);
+		redirect($_POST['webpage']);
+	}
 	public function view($project_name){
+		$this->load->library('Comments');
 		$name = urldecode($project_name);
 		$this->data['info_q'] = $this->db->get_where('Project_Ideas',array('Project_Name'=>$name));
 		$this->db->order_by("Comment_ID asc");
@@ -78,6 +95,7 @@ class projects extends CI_Controller {
 			$this->load->view('menu',$this->data);
 			$this->load->view('projectview',$this->data);
 			// Comment Section
+			$this->load->view('commentAdder');
 			foreach($this->data['comment_q']->result() as $row){
 				$this->load->view('commentView',$row);
 			}
