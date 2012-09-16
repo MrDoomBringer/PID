@@ -73,6 +73,10 @@ class projects extends CI_Controller {
 			$data['Comment'] = NULL;
 		}else{
 			$data['Comment'] = $_POST['comment'];
+			$data['Comment'] = str_replace('<','&lt;',$data['Comment']);
+			$data['Comment'] = str_replace('>','&gt;',$data['Comment']);
+			$data['Comment'] = str_replace(' ','&nbsp;',$data['Comment']);
+			$data['Comment'] = nl2br($data['Comment']);
 		}
 		if(empty($_POST['like'])){
 			$data['Like'] = NULL;
