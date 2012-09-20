@@ -12,7 +12,6 @@ if ($diff == 0) {
 	$diff_color = 'danger';
 }elseif ($diff == 10) {
 	$diff_color = 'inverse';
-	$diff = 'PTSD';
 }
 switch ($status){
 	case "In Progress":
@@ -91,9 +90,7 @@ function hreffix($string){
 			</div>
 		</div>
 		<div class='container-fluid'>
-			<?php $time = $info_q->row()->Modified;
-					$time = date_create($time);
-			?>
+			<?php $time = date_create($info_q->row()->Modified) ?>
 			<p><small>Last Modified - <?php echo date_format($time, 'H:i (d-m-y)') ?></small></p>
 		</div>
 	</div>

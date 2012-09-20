@@ -3,6 +3,7 @@
 class Comments{
 	public function commentform($webpage){
 		$style = array(
+			'class' => 'span6',
 			'name' => 'comment',
 			'rows' => 3,
 			'placeholder' => 'Respond to this project'

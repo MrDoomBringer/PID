@@ -11,31 +11,41 @@ class projects extends CI_Controller {
 		$this->load->library('WebParent');
 		$this->load->library('projectSubmit');
 		$this->load->database();
-		$this->data = $this->webparent->webdata;
-		$this->submit = $this->projectsubmit;
+		$this->webglobal = $this->webparent->webdata;
+		$this->db->select('Project_Name');
+		$query = $this->db->get('public.Project_Ideas');
+		$this->webglobal['menuProjects'] = "";
+		foreach($query->result_array() as $row){
+			$this->webglobal['menuProjects'] .= ",\"{$row['Project_Name']}\"";
+		}
+		$this->webglobal['menuProjects'] = preg_replace('/\,/','',$this->webglobal['menuProjects'],1);
 	}
 	public function index(){
-		$this->load->view('header',$this->data);
-		$this->load->view('menu',$this->data);
+		$this->webglobal['page_title'] = 'Home';
+		$this->load->view('header',$this->webglobal);
+		$this->load->view('menu',$this->webglobal);
 		$this->load->view('footer');
 	}
 	public function viewall(){
-		$this->data['page_title'] = 'ViewAll';
-		$query = 'SELECT "Project_Name","Committee","Difficulty","Credit","Status" FROM "public"."Project_Ideas"';
-		$this->data['info_q'] = $this->db->query($query);
-		$this->load->view('header',$this->data);
-		$this->load->view('menu',$this->data);
-		$this->load->view('viewall',$this->data);
+		$this->webglobal['page_title'] = 'ViewAll';
+		$this->load->library('ViewAll');
+		$this->db->select('Project_Name,Committee,Difficulty,Credit,Status,Modified');
+		$query = $this->db->get('public.Project_Ideas');
+		$this->webglobal['info_q'] = $query;
+		$this->load->view('header',$this->webglobal);
+		$this->load->view('menu',$this->webglobal);
+		$this->load->view('viewall',$this->webglobal);
 		$this->load->view('footer');
 	}
 	public function NewProject(){
-		$this->data['page_title'] = 'New';
-		$this->load->view('header',$this->data);
-		$this->load->view('menu',$this->data);
-		$this->load->view('newview',$this->data);
+		$this->webglobal['page_title'] = 'New';
+		$this->load->view('header',$this->webglobal);
+		$this->load->view('menu',$this->webglobal);
+		$this->load->view('newview',$this->webglobal);
 		$this->load->view('footer');
 	}
 	public function projectSummit(){
+		$this->submit = $this->projectsubmit;
 		$post = array();
 		if(empty($_POST['project_nick'])){
 			$redirect = rawurlencode($_POST['project_name']);
@@ -68,7 +78,7 @@ class projects extends CI_Controller {
 	public function projectAccept(){
 	}
 	public function addComment(){
-		$data = array('User_Name' => $this->data['username']);
+		$data = array('User_Name' => $this->webglobal['username']);
 		if(empty($_POST['comment'])){
 			$data['Comment'] = NULL;
 		}else{
@@ -90,17 +100,17 @@ class projects extends CI_Controller {
 	public function view($project_name){
 		$this->load->library('Comments');
 		$name = urldecode($project_name);
-		$this->data['info_q'] = $this->db->get_where('Project_Ideas',array('Project_Name'=>$name));
+		$this->webglobal['info_q'] = $this->db->get_where('Project_Ideas',array('Project_Name'=>$name));
 		$this->db->order_by("Comment_ID asc");
-		$this->data['comment_q'] = $this->db->get_where('Project_Comments',array('Project_Name'=>$name));
-		if ($this->data['info_q']->num_rows() > 0){
-			$this->data['page_title'] = $name;
-			$this->load->view('header',$this->data);
-			$this->load->view('menu',$this->data);
-			$this->load->view('projectview',$this->data);
+		$this->webglobal['comment_q'] = $this->db->get_where('Project_Comments',array('Project_Name'=>$name));
+		if ($this->webglobal['info_q']->num_rows() > 0){
+			$this->webglobal['page_title'] = $name;
+			$this->load->view('header',$this->webglobal);
+			$this->load->view('menu',$this->webglobal);
+			$this->load->view('projectview',$this->webglobal);
 			// Comment Section
 			$this->load->view('commentAdder');
-			foreach($this->data['comment_q']->result() as $row){
+			foreach($this->webglobal['comment_q']->result() as $row){
 				$this->load->view('commentView',$row);
 			}
 			$this->load->view('footer');
