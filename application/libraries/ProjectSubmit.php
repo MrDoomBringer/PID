@@ -7,11 +7,11 @@ class ProjectSubmit{
 		$string = '<h3>'.$string.'</h3>';
 		return $string;
 	}
-	private function psqarray($single){
+	public function psqarray($single){
 		// surrounds string in curly braces
 		return '{'.$single.'}';
 	}
-	private function clean($post){
+	public function clean($post){
 		// Gets data ready for database set
 		if($post['Difficulty'] == "Unsure"){
 			$post['Difficulty'] = 0;
