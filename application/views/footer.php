@@ -1,7 +1,7 @@
 	<div class="container-fluid">
 	<hr>
 	<footer>
-		<p>&copy Ethan House 2012</p>
+		<p>&copy EHouse 2012</p>
 	</footer>
 	<!-- Le javascript$
 	================================================== -->

@@ -14,7 +14,6 @@
 				<ul class="dropdown-menu">
 					<li><?php echo anchor('projects/viewall','View All') ?></li>
 					<li><a href="#">My Projects</a></li>
-					<li><a href="#">Advanced Project Search</a></li>
 				</ul>
 			</li>
 			<li><?php echo anchor('projects/NewProject','New Project') ?></li>

@@ -39,10 +39,43 @@ class projects extends CI_Controller {
 	}
 	public function NewProject(){
 		$this->webglobal['page_title'] = 'New';
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('<div class="alert alert-block">', '</div>');
+		$this->form_validation->set_rules('project_nick','Project Name','min_length[2]|max_length[8]');
+		$this->form_validation->set_rules('project_name','Project Name','required');
+		$this->form_validation->set_rules('committee[]','Committee','required');
+		$this->form_validation->set_rules('info','Project Info','max_length[500]');
+		$this->form_validation->set_rules('difficulty','Difficulty','callback__difficultyForm');
+		$this->form_validation->set_rules('source','Source','max_length[254]|prep_url');
+		$this->form_validation->set_rules('Status','Status','callback__statusForm');
 		$this->load->view('header',$this->webglobal);
 		$this->load->view('menu',$this->webglobal);
-		$this->load->view('newview',$this->webglobal);
+		if($this->form_validation->run() == FALSE){
+			$this->load->view('newview',$this->webglobal);
+		}else{
+			redirect('projects/viewall/');
+		}
 		$this->load->view('footer');
+	}
+	//
+	public function _difficultyForm($value){
+		if($value >= 0 && $value <= 10){
+			return True;
+		}else{
+			$this->form_validation->set_message('_difficultyForm', '%s has a non valid input');
+			return False;
+		}
+	}
+	public function _statusForm($value){
+		$array = array('In Progress','Idea','Planning','Completed','Abandoned','Cursed');
+		foreach($array as $element){
+			if($value == $element){
+				return True;
+			}else{
+				$this->form_validation->set_message('_statusForm', '%s is not a valid input');
+				return False;
+			}
+		}
 	}
 	public function projectSummit(){
 		$this->submit = $this->projectsubmit;
@@ -71,7 +104,6 @@ class projects extends CI_Controller {
 			$post['Related'] = $_POST['related'];
 		}
 		$this->db->insert('Project_Ideas',$this->projectsubmit->clean($post));
-		redirect('projects/view/'.$redirect);
 	}
 	public function projectDeny(){
 	}
