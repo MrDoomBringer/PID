@@ -55,7 +55,7 @@ class projects extends CI_Controller {
 	public function NewProject(){
 		$this->webglobal['page_title'] = 'New';
 		$this->load->library('form_validation');
-		$this->form_validation->set_error_delimiters('<div class="alert alert-block">', '</div>');
+		$this->form_validation->set_error_delimiters('<div class="alert alert-error">', '</div>');
 		$this->form_validation->set_rules('project_nick','Project Acronym','min_length[2]|max_length[8]|callback__invalidChar');
 		$this->form_validation->set_rules('project_name','Project Name','required|callback__invalidChar');
 		$this->form_validation->set_rules('committee[]','Committee','callback__committeeCheck|callback__invalidChar');
@@ -75,7 +75,7 @@ class projects extends CI_Controller {
 	}
 	public function _invalidChar($value){
 		$this->form_validation->set_message('_invalidChar', '%s has a invalid char');
-		return !preg_match("/[^A-Za-z0-9\,\'\.\+\-\&\\s]/", $value);
+		return !preg_match("/[^A-Za-z0-9\,\'\.\+\-\&\\s\:\/]/", $value);
 	}
 	public function _committeeCheck($value){
 		$this->form_validation->set_message('_committeeCheck', '%s has a non valid input');

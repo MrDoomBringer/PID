@@ -29,25 +29,25 @@
 			<?php echo form_error('committee[]'); ?>
 			<div class='control-group error'>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='OpComm' />OpComm
+				<input name="committee[]" type="checkbox" value='OpComm' <?php echo set_checkbox("committee[]",'OpComm') ?> />OpComm
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='R&D' />R&D
+				<input name="committee[]" type="checkbox" value='R&D' <?php echo set_checkbox("committee[]",'R&D') ?>/>R&D
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='Social' />Social
+				<input name="committee[]" type="checkbox" value='Social' <?php echo set_checkbox('committee[]','Social') ?>/>Social
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='History' />History
+				<input name="committee[]" type="checkbox" value='History' <?php echo set_checkbox('committee[]','History') ?>/>History
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='Eval' />Eval
+				<input name="committee[]" type="checkbox" value='Eval' <?php echo set_checkbox('committee[]','Eval') ?>/>Eval
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='Financial' />Financial
+				<input name="committee[]" type="checkbox" value='Financial' <?php echo set_checkbox('committee[]','Financial') ?>/>Financial
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='Other' />Other
+				<input name="committee[]" type="checkbox" value='Other' <?php echo set_checkbox('committee[]','Other') ?>/>Other
 			</label>
 			</div>
 		</div>
@@ -79,7 +79,7 @@
 							"CSH Done" => "CSH Done",
 							"Broken & Forgotten" => "Broken & Forgotten",
 							"Cursed" => "Cursed");
-							echo form_dropdown('status',$options,"id='inputWarning'") ?>
+							echo form_dropdown('status',$options,set_value('status'),"id='inputWarning'") ?>
 					</div>
 					<?php echo form_error('team'); ?>
 					<?php echo form_label('Team Members','team'); ?>
@@ -95,16 +95,24 @@
 						<?php for($x=0;$x<11;$x++){
 							switch($x){
 								case 0:
-									echo "<option value=$x>Unsure</option>";
+									echo "<option ";
+									echo (set_value('difficulty') == $x) ? 'selected ' : '';
+									echo "value=$x>Unsure</option>";
 									break;
 								case 1:
-									echo "<option value=$x>$x - 30 second project</option>";
+									echo "<option ";
+									echo (set_value('difficulty') == $x) ? 'selected ' : '';
+									echo "value=$x>$x - 30 second project</option>";
 									break;
 								case 10:
-									echo "<option value=$x>$x - Induces Panic Attacks</option>";
+									echo "<option ";
+									echo (set_value('difficulty') == $x) ? 'selected ' : '';
+									echo "value=$x>$x - Induces Panic Attacks</option>";
 									break;
 								default:
-									echo "<option value=$x>$x</option>";
+									echo "<option ";
+									echo (set_value('difficulty') == $x) ? 'selected ' : '';
+									echo "value=$x>$x</option>";
 									break;
 							}
 						} ?>
