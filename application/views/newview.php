@@ -33,6 +33,9 @@
 			<label class="checkbox inline">
 				<input name="committee[]" type="checkbox" value='Financial' />Financial
 			</label>
+			<label class="checkbox inline">
+				<input name="committee[]" type="checkbox" value='Other' />Other
+			</label>
 		</div>
 	</div>
 	<div class='row-fluid'>
@@ -48,30 +51,31 @@
 			<legend>Specific Information</legend>
 			<div class='row-fluid'>
 				<div class='span6'>
-					<?php echo form_error('difficulty'); ?>
 					<?php echo form_error('status'); ?>
-					<?php echo form_error('team'); ?>
-					<?php echo form_error('related'); ?>
 					<?php echo form_label('Project Status','status'); ?>
 					<?php $options = array('Choose One...',
-						'Idea Phase',
-						'Planning Phase',
-						'Completed',
-						'Deployed & Completed',
-						'Deployed & Forgotten',
-						'Deployed & In Development',
-						'CSH Done',
-						'Broken & Forgotten',
-						'Cursed');
+						"Idea Phase" => "Idea Phase",
+						"Planning Phase" => "Planning Phase",
+						"In Development" => "In Development",
+						"Completed" => "Completed",
+						"Deployed & Completed" => "Deployed & Completed",
+						"Deployed & Forgotten" => "Deployed & Forgotten",
+						"Deployed & In Development" => "Deployed & In Development",
+						"CSH Done" => "CSH Done",
+						"Broken & Forgotten" => "Broken & Forgotten",
+						"Cursed" => "Cursed");
 						echo form_dropdown('status',$options) ?>
 					<?php echo form_label('Project Difficulty','difficulty') ?>
+					<?php echo form_error('difficulty'); ?>
 					<select name="difficulty">
 						<?php for($x=0;$x<11;$x++){echo ($x == 0 ? "<option>Unsure</option>" : "<option>$x</option>");}; ?>
 					</select>
 				</div>
 				<div class='span6'>
+					<?php echo form_error('team'); ?>
 					<?php echo form_label('Team Members','team'); ?>
-					<input class="uneditable-input" type="text" name="team" placeholder="Team" value=<?php echo $username ?>>
+					<input class="text" type="text" name="team" placeholder="Team" value=<?php echo $username ?>>
+					<?php echo form_error('related'); ?>
 					<?php echo form_label('Related Projects','related') ?>
 					<input type="text" name="related" value='<?php echo set_value('related') ?>' placeholder="Related Projects">
 				</div>

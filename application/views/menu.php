@@ -9,13 +9,8 @@
 	  <a class="brand" href="<?php echo base_url() ?>"><img style="width: 22px; height: 22px;" src="<?php echo base_url('/assets/img/csh_icon.png') ?>" class="img-rounded"></a>
 	  <div class="nav-collapse">
 		<ul class="nav">
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Project View<b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><?php echo anchor('projects/viewall','View All') ?></li>
-					<li><a href="#">My Projects</a></li>
-				</ul>
-			</li>
+			<li><?php echo anchor('projects/viewall','Search All') ?></li>
+			<li><?php echo anchor('#','My Projects') ?></li>
 			<li><?php echo anchor('projects/NewProject','New Project') ?></li>
 		</ul>
 		<ul class="nav pull-right">

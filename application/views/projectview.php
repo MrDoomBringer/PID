@@ -1,10 +1,7 @@
 <?php
 $diff = $info_q->row()->Difficulty;
 $status = $info_q->row()->Status;
-if ($diff == 0) {
-	$diff = '???';
-	$diff_color = 'info';
-}elseif ($diff >= 1 && $diff <= 3) {
+if ($diff >= 1 && $diff <= 3) {
 	$diff_color = 'info';
 }elseif ($diff >= 4 && $diff <= 6) {
 	$diff_color = 'warning';
@@ -14,19 +11,24 @@ if ($diff == 0) {
 	$diff_color = 'inverse';
 }
 switch ($status){
-	case "In Progress":
-		$status_color = 'warning';
-		break;
-	case "Done":
+	case "Deployed & Completed":
+	case "Completed":
 		$status_color = 'success';
 		break;
-	case "Idea":
+	case "Planning Phase":
 		$status_color = 'info';
 		break;
-	case "Planning":
+	case "In Development":
+		$status_color = 'warning';
+		break;
+	case "Deployed":
+	case "Deployed & Forgotten":
+	case "Deployed & In Development":
 		$status_color = 'info';
 		break;
-	case "Abandonded";
+	case "CSH Done":
+	case "Broken":
+	case "Cursed":
 		$status_color = 'error';
 		break;
 }
@@ -63,7 +65,7 @@ function hreffix($string){
 						<button class="btn btn-large btn-block disabled btn-<?php echo $status_color ?>" type="button"><strong><?php echo $status ?></strong></button>
 					</div>
 					<div class="span2">
-						<button class="btn btn-large btn-block disabled btn-<?php echo $diff_color ?>" type="button"><strong><?php echo $diff ?></strong></button>
+					<?php if($diff != 0){echo '<button class="btn btn-large btn-block disabled btn-'.$diff_color.' type="button"><strong>'.$diff.'</strong></button>';} ?>
 					</div>
 				</div>
 				<h3>Work Force</h3>

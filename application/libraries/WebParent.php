@@ -2,7 +2,7 @@
 
 class WebParent{
 	public function WebParent(){
-		$this->webdata['website'] = 'Projects';
+		$this->webdata['website'] = 'PID';
 		$this->webdata['username'] = $_SERVER['WEBAUTH_USER'];
 		$this->webdata['realname'] = $_SERVER['WEBAUTH_LDAP_CN'];
 	}

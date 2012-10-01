@@ -41,69 +41,55 @@ class projects extends CI_Controller {
 		$this->webglobal['page_title'] = 'New';
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<div class="alert alert-block">', '</div>');
-		$this->form_validation->set_rules('project_nick','Project Name','min_length[2]|max_length[8]');
+		$this->form_validation->set_rules('project_nick','Project Acronym','min_length[2]|max_length[8]');
 		$this->form_validation->set_rules('project_name','Project Name','required');
-		$this->form_validation->set_rules('committee[]','Committee','required');
+		$this->form_validation->set_rules('committee[]','Committee','callback__committeeCheck');
 		$this->form_validation->set_rules('info','Project Info','max_length[500]');
 		$this->form_validation->set_rules('difficulty','Difficulty','callback__difficultyForm');
 		$this->form_validation->set_rules('source','Source','max_length[254]|prep_url');
-		$this->form_validation->set_rules('Status','Status','callback__statusForm');
+		$this->form_validation->set_rules('status','Status','callback__statusForm');
+		$this->form_validation->set_rules('team','Team','');
 		$this->load->view('header',$this->webglobal);
 		$this->load->view('menu',$this->webglobal);
 		if($this->form_validation->run() == FALSE){
 			$this->load->view('newview',$this->webglobal);
 		}else{
-			redirect('projects/viewall/');
+			$this->load->view('projectSubmit',$this->webglobal);
 		}
 		$this->load->view('footer');
 	}
-	//
+	public function _committeeCheck($value){
+		$this->form_validation->set_message('_committeeCheck', '%s has a non valid input');
+		switch($value){
+			case "OpComm": return True;
+			case "R&D": return True;
+			case "Social": return True;
+			case "History": return True;
+			case "Eval": return True;
+			case "Financial": return True;
+			case "Other": return True;
+			default: return False;
+		}
+	}
 	public function _difficultyForm($value){
+		$this->form_validation->set_message('_difficultyForm', '%s has a non valid input');
 		if($value >= 0 && $value <= 10){
 			return True;
 		}else{
-			$this->form_validation->set_message('_difficultyForm', '%s has a non valid input');
 			return False;
 		}
 	}
 	public function _statusForm($value){
-		$array = array('In Progress','Idea','Planning','Completed','Abandoned','Cursed');
-		foreach($array as $element){
+		$this->form_validation->set_message('_statusForm', '%s is a non-valid input');
+		$options = array('Idea Phase','Planning Phase','In Development','Completed',
+						'Deployed & Completed','Deployed & Forgotten','Deployed & In Development',
+						'CSH Done','Broken & Forgotten','Cursed');
+		foreach($options as $key => $element){
 			if($value == $element){
 				return True;
-			}else{
-				$this->form_validation->set_message('_statusForm', '%s is not a valid input');
-				return False;
 			}
 		}
-	}
-	public function projectSummit(){
-		$this->submit = $this->projectsubmit;
-		$post = array();
-		if(empty($_POST['project_nick'])){
-			$redirect = rawurlencode($_POST['project_name']);
-			$post['Project_Name'] = $_POST['project_name'];
-			$post['Info'] = $_POST['info'];
-		}else{
-			$redirect = rawurlencode($_POST['project_nick']);
-			$post['Project_Name'] = $_POST['project_nick'];
-			$post['Info'] = $this->projectsubmit->camelCase($_POST['project_name']).$_POST['info'];
-		}
-		$post['Committee'] = $_POST['committee'];
-		$post['Difficulty'] = $_POST['difficulty'];
-		if(empty($_POST['source'])){
-			$post['Source'] = NULL;
-		}else{
-			$post['Source'] = $_POST['source'];
-		}
-		$post['Status'] = $_POST['status'];
-		$post['Credit'] = $_POST['team'];
-		if(empty($_POST['related'])){
-			$post['Related'] = NULL;
-		}else{
-			$post['Related'] = $_POST['related'];
-		}
-		$this->db->insert('Project_Ideas',$this->projectsubmit->clean($post));
+		return False;
 	}
 	public function projectDeny(){
 	}
