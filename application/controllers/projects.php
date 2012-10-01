@@ -37,18 +37,33 @@ class projects extends CI_Controller {
 		$this->load->view('viewall',$this->webglobal);
 		$this->load->view('footer');
 	}
+	public function Profile($user){
+		$this->webglobal['page_title'] = $user.' Profile';
+		$this->db->select('Project_Name,Committee,Difficulty,Credit,Status,Modified');
+
+		$this->load->view('header',$this->webglobal);
+		$this->load->view('menu',$this->webglobal);
+		$this->load->view('profileview',$this->webglobal);
+		$this->load->view('footer');
+	}
+	public function EditProject($user,$project){
+		$this->webglobal['page_title'] = 'Edit '.$project;
+		$this->load->view('header',$this->webglobal);
+		$this->load->view('menu',$this->webglobal);
+		$this->load->view('footer');
+	}
 	public function NewProject(){
 		$this->webglobal['page_title'] = 'New';
 		$this->load->library('form_validation');
 		$this->form_validation->set_error_delimiters('<div class="alert alert-block">', '</div>');
-		$this->form_validation->set_rules('project_nick','Project Acronym','min_length[2]|max_length[8]');
-		$this->form_validation->set_rules('project_name','Project Name','required');
-		$this->form_validation->set_rules('committee[]','Committee','callback__committeeCheck');
-		$this->form_validation->set_rules('info','Project Info','max_length[500]');
-		$this->form_validation->set_rules('difficulty','Difficulty','callback__difficultyForm');
-		$this->form_validation->set_rules('source','Source','max_length[254]|prep_url');
-		$this->form_validation->set_rules('status','Status','callback__statusForm');
-		$this->form_validation->set_rules('team','Team','');
+		$this->form_validation->set_rules('project_nick','Project Acronym','min_length[2]|max_length[8]|callback__invalidChar');
+		$this->form_validation->set_rules('project_name','Project Name','required|callback__invalidChar');
+		$this->form_validation->set_rules('committee[]','Committee','callback__committeeCheck|callback__invalidChar');
+		$this->form_validation->set_rules('info','Project Info','max_length[500]|callback__invalidChar');
+		$this->form_validation->set_rules('difficulty','Difficulty','callback__difficultyForm|callback__invalidChar');
+		$this->form_validation->set_rules('source','Source','max_length[254]|prep_url|callback__invalidChar');
+		$this->form_validation->set_rules('status','Status','callback__statusForm|callback__invalidChar');
+		$this->form_validation->set_rules('team','Team','callback__invalidChar');
 		$this->load->view('header',$this->webglobal);
 		$this->load->view('menu',$this->webglobal);
 		if($this->form_validation->run() == FALSE){
@@ -58,15 +73,19 @@ class projects extends CI_Controller {
 		}
 		$this->load->view('footer');
 	}
+	public function _invalidChar($value){
+		$this->form_validation->set_message('_invalidChar', '%s has a invalid char');
+		return !preg_match("/[^A-Za-z0-9\,\'\.\+\-\&\\s]/", $value);
+	}
 	public function _committeeCheck($value){
 		$this->form_validation->set_message('_committeeCheck', '%s has a non valid input');
 		switch($value){
-			case "OpComm": return True;
-			case "R&D": return True;
-			case "Social": return True;
-			case "History": return True;
-			case "Eval": return True;
-			case "Financial": return True;
+			case "OpComm":
+			case "R&D":
+			case "Social":
+			case "History":
+			case "Eval":
+			case "Financial":
 			case "Other": return True;
 			default: return False;
 		}
@@ -90,10 +109,6 @@ class projects extends CI_Controller {
 			}
 		}
 		return False;
-	}
-	public function projectDeny(){
-	}
-	public function projectAccept(){
 	}
 	public function addComment(){
 		$data = array('User_Name' => $this->webglobal['username']);

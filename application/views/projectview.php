@@ -29,7 +29,7 @@ switch ($status){
 	case "CSH Done":
 	case "Broken":
 	case "Cursed":
-		$status_color = 'error';
+		$status_color = 'danger';
 		break;
 }
 ?>
@@ -49,7 +49,7 @@ function hreffix($string){
 		<div class="row-fluid">
 			<div class="span6 offset1">
 				<div class="page-header">
-					<h1><?php echo $info_q->row()->Project_Name ?></h1>
+					<h2><?php echo $info_q->row()->Project_Name ?></h2>
 					<p>
 					<?php $info = $info_q->row()->Info;
 					$info = $this->typography->auto_typography($info);

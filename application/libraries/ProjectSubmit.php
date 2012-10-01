@@ -1,12 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class ProjectSubmit{
-	public function camelCase($string){
-		// Formats title string
-		$string = preg_replace('/([A-Z])/','<u>$1</u>',$string);
-		$string = '<h3>'.$string.'</h3>';
-		return $string;
-	}
 	public function psqarray($single){
 		// surrounds string in curly braces
 		return '{'.$single.'}';

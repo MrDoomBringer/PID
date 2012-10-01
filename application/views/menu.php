@@ -19,7 +19,7 @@
 				<input type="text" data-provide="typeahead" data-source=[<?php echo $menuProjects ?>] placeholder="Quick Search">
 				</form>
 			</li>
-			<li><a href="#"><?php echo "$realname ( $username )" ?></a></li>
+			<li><?php echo anchor('projects/profile/'.$username,"$realname ($username)") ?>
 		</ul>
 	  </div><!--/.nav-collapse -->
 	</div>
