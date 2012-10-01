@@ -59,7 +59,7 @@ class projects extends CI_Controller {
 		$this->form_validation->set_rules('project_nick','Project Acronym','min_length[2]|max_length[8]|callback__invalidChar');
 		$this->form_validation->set_rules('project_name','Project Name','required|callback__invalidChar');
 		$this->form_validation->set_rules('committee[]','Committee','callback__committeeCheck|callback__invalidChar');
-		$this->form_validation->set_rules('info','Project Info','max_length[500]|callback__invalidChar');
+		$this->form_validation->set_rules('info','Project Info','max_length[1000]|callback__invalidChar');
 		$this->form_validation->set_rules('difficulty','Difficulty','callback__difficultyForm|callback__invalidChar');
 		$this->form_validation->set_rules('source','Source','max_length[254]|prep_url|callback__invalidChar');
 		$this->form_validation->set_rules('status','Status','callback__statusForm|callback__invalidChar');

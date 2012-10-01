@@ -43,20 +43,30 @@ function hreffix($string){
 	$string = urlencode($string);
 	return $string;
 }
+function camelCase($string){
+	$string = preg_replace('/([A-Z])/','<u>$1</u>',$string);
+	return $string;
+}
 ?>
 <div class="container">
 	<div class="hero-unit">
 		<div class="row-fluid">
 			<div class="span6 offset1">
 				<div class="page-header">
-					<h2><?php echo $info_q->row()->Project_Name ?></h2>
-					<p>
+					<?php 
+						$acro = $info_q->row()->Project_Acronym;
+						$name = $info_q->row()->Project_Name;
+						if($acro == ''){
+							echo "<h1>$name</h1>";
+						}else{
+							echo "<h1>$acro</h1>";
+							echo "<h2>".camelCase($name)."</h2>";
+						} ?>
 					<?php $info = $info_q->row()->Info;
 					$info = $this->typography->auto_typography($info);
 					echo $info ?>
 					<p><?php echo auto_link(strip($info_q->row()->Source)) ?></p>
 					<?php ?>
-					</p>
 				</div>
 			</div>
 			<div class="span4 offset1">

@@ -1,15 +1,29 @@
 <?php
+function psqarray($single){
+	return '{'.$single.'}';
+}
+function nullCheck($value){
+	if($value == ''){
+		return True;
+	}else{
+		return False;
+	}
+}
+function clean($post){
+	$post['Committee'] = psqarray(implode(',',$post['Committee']));
+	$post['Credit'] = psqarray($post['Credit']);
+	$post['Source'] = psqarray($post['Source']);
+	if(nullCheck($post['Related'])){
+		$post['Related'] = NULL;
+	}else{
+		$post['Related'] = psqarray($post['Related']);
+	}
+	return $post;
+}
 $this->submit = $this->projectsubmit;
 $post = array();
-if(empty($_POST['project_nick'])){
-	$redirect = rawurlencode($_POST['project_name']);
-	$post['Project_Name'] = $_POST['project_name'];
-	$post['Info'] = $_POST['info'];
-}else{
-	$redirect = rawurlencode($_POST['project_nick']);
-	$post['Project_Name'] = $_POST['project_nick'];
-	$post['Info'] = $this->projectsubmit->camelCase($_POST['project_name']).$_POST['info'];
-}
+$post['Project_Name'] = $_POST['project_name'];
+$post['Info'] = $_POST['info'];
 $post['Committee'] = $_POST['committee'];
 $post['Difficulty'] = $_POST['difficulty'];
 if(empty($_POST['source'])){
@@ -24,5 +38,6 @@ if(empty($_POST['related'])){
 }else{
 	$post['Related'] = $_POST['related'];
 }
-$this->db->insert('Project_Ideas',$this->projectsubmit->clean($post));
+$this->db->insert('Project_Ideas',clean($post));
+redirect('projects/view/'.rawurlencode($post['Project_Name']));
 ?>

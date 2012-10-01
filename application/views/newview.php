@@ -77,6 +77,7 @@
 							"Deployed & Forgotten" => "Deployed & Forgotten",
 							"Deployed & In Development" => "Deployed & In Development",
 							"CSH Done" => "CSH Done",
+							"Old & Replaced" => "Old & Replaced",
 							"Broken & Forgotten" => "Broken & Forgotten",
 							"Cursed" => "Cursed");
 							echo form_dropdown('status',$options,set_value('status'),"id='inputWarning'") ?>
