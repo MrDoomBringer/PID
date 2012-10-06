@@ -2,7 +2,7 @@
 	return preg_replace('/[\{\}]/','',$data);
 } ?>
 <div class='container'>
-	<?php echo form_open('projects/edit'); ?>
+	<?php echo form_open("projects/edit/".$info_q->row()->Project_Name); ?>
 	<div class='row-fluid'>
 	<div class='span6'>
 		<h2>Project Edit Form</h2>

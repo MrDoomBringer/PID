@@ -20,4 +20,11 @@ class ProjectSubmit{
 		}
 		return $post;
 	}
+	public function nullCheck($value){
+		if($value == ''){
+			return True;
+		}else{
+			return False;
+		}
+	}
 }
