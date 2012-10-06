@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Profile{
+class Search{
 	public function displayrow($row){
 		echo '<tr>';
 		echo '<td>'.anchor('projects/view/'.$row['Project_Name'],$row['Project_Name']).'</td>';

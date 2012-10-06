@@ -34,7 +34,7 @@ class projects extends CI_Controller {
 		$this->load->view('footer');
 	}
 	public function Search($searchterm){
-		$this->load->library('Profile');
+		$this->load->library('Search');
 		$this->webglobal['page_title'] = 'Search';
 		$this->db->select('Project_Name,Project_Acronym,Committee,Difficulty,Credit,Status,Modified');
 		$query = $this->db->get('public.Project_Ideas');
