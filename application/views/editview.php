@@ -1,8 +1,8 @@
 <div class='container'>
-	<?php echo form_open('projects/NewProject'); ?>
+	<?php echo form_open('projects/edit'); ?>
 	<div class='row-fluid'>
 	<div class='span6'>
-		<h2>Project Submission Form</h2>
+		<h2>Project Edit Form</h2>
 		<input class='btn btn-primary' type='submit' value='Submit Project'/>
 	</div>
 	<div class='span6'>
@@ -18,10 +18,10 @@
 			<legend>Project Name</legend>
 			<?php echo form_error('project_nick'); ?>
 			<?php echo form_error('project_name'); ?>
-			<input type="text" name='project_nick' value='<?php echo set_value('project_nick') ?>' placeholder="Project Acronym">
+			<input type="text" name='project_nick' value='<?php echo $info_q->row()->Project_Acronym ?>' placeholder="Project Acronym">
 			<br />
 			<div class='control-group error'>
-				<input id='inputWarning' type="text" name='project_name' value='<?php echo set_value('project_name') ?>' placeholder="Project Full Name">
+				<input id='inputWarning' type="text" name='project_name' value='<?php echo $info_q->row()->Project_Name ?>' placeholder="Project Full Name">
 			</div>
 		</div>
 		<div class='span6'>
@@ -57,9 +57,9 @@
 			<legend>General Information</legend>
 			<?php echo form_error('info'); ?>
 			<?php echo form_error('source'); ?>
-			<textarea class='span11' name="info" placeholder="Project Info" rows=3><?php echo set_value('info') ?></textarea>
+			<textarea class='span11' name="info" placeholder="Project Info" rows=3><?php echo $info_q->row()->Info ?></textarea>
 			<br />
-			<input class='span11' type="text" name="source" value='<?php echo set_value('source') ?>' placeholder="Source link">
+			<input class='span11' type="text" name="source" value='<?php echo $info_q->row()->Source ?>' placeholder="Source link">
 		</div>
 		<div class='span6'>
 			<legend>Specific Information</legend>
@@ -85,7 +85,7 @@
 					<?php echo form_error('team'); ?>
 					<?php echo form_label('Team Members','team'); ?>
 					<div class='control-group error'>
-						<input id='inputWarning' class="text" type="text" name="team" placeholder="CSH User Name">
+						<input id='inputWarning' class="text" type="text" name="team" placeholder="Team" value=<?php echo $info_q->row()->Credit ?>>
 					</div>
 				</div>
 				<div class='span6'>
@@ -121,7 +121,7 @@
 					</div>
 					<?php echo form_error('related'); ?>
 					<?php echo form_label('Related Projects','related') ?>
-					<input type="text" name="related" value='<?php echo set_value('related') ?>' placeholder="Related Projects">
+					<input type="text" name="related" value='<?php echo $info_q->row()->Related ?>' placeholder="Related Projects">
 				</div>
 			</div>
 		</div>

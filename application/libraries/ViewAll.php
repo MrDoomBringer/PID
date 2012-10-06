@@ -8,6 +8,8 @@ class Viewall{
 		echo '<td>'.$this->clean($row['Credit']).'</td>';
 		echo '<td>'.$row['Status'].'</td>';
 		echo '<td>'.date_format(date_create($row['Modified']),'d-m-Y').'</td>';
+		//echo '<td> <a href='.base_url('projects/edit/'.rawurldecode($row['Project_Name'])).'class="btn btn-primary></a></td>';
+		echo '<td> <a href='.base_url("projects/edit/".rawurlencode($row["Project_Name"])).' class="btn btn-primary">Modify</a></td>';
 		echo '</tr>';
 	}
 	private function clean($data){

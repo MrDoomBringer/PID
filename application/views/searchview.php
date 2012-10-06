@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<div class="container">
+<div class='container'>
 	<div class="row-fluid">
 		<div class='well'>
-			<table class='table table-bordered table-striped'>
+			<table id='profile-table' class='table table-bordered table-striped'>
 				<thead><tr>
 					<th>Project Name</th>
 					<th>Committee</th>
@@ -13,7 +13,7 @@
 					<th></th>
 				</tr></thead>
 				<tbody>
-					<?php foreach($info_q->result_array() as $row){ $this->viewall->displayrow($row);} ?>
+					<?php foreach($info_q as $row){ $this->profile->displayrow($row);} ?>
 				</tbody>
 			</table>
 		</div>

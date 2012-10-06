@@ -15,10 +15,6 @@ class projects extends CI_Controller {
 		$this->db->select('Project_Name');
 		$query = $this->db->get('public.Project_Ideas');
 		$this->webglobal['menuProjects'] = "";
-		foreach($query->result_array() as $row){
-			$this->webglobal['menuProjects'] .= ",\"{$row['Project_Name']}\"";
-		}
-		$this->webglobal['menuProjects'] = preg_replace('/\,/','',$this->webglobal['menuProjects'],1);
 	}
 	public function index(){
 		$this->webglobal['page_title'] = 'Home';
@@ -27,9 +23,9 @@ class projects extends CI_Controller {
 		$this->load->view('footer');
 	}
 	public function viewall(){
-		$this->webglobal['page_title'] = 'ViewAll';
 		$this->load->library('ViewAll');
-		$this->db->select('Project_Name,Committee,Difficulty,Credit,Status,Modified');
+		$this->webglobal['page_title'] = 'ViewAll';
+		$this->db->select('Project_Name,Project_Acronym,Committee,Difficulty,Credit,Status,Modified');
 		$query = $this->db->get('public.Project_Ideas');
 		$this->webglobal['info_q'] = $query;
 		$this->load->view('header',$this->webglobal);
@@ -37,19 +33,47 @@ class projects extends CI_Controller {
 		$this->load->view('viewall',$this->webglobal);
 		$this->load->view('footer');
 	}
-	public function Profile($user){
-		$this->webglobal['page_title'] = $user.' Profile';
-		$this->db->select('Project_Name,Committee,Difficulty,Credit,Status,Modified');
-
+	public function Search($searchterm){
+		$this->load->library('Profile');
+		$this->webglobal['page_title'] = 'Search';
+		$this->db->select('Project_Name,Project_Acronym,Committee,Difficulty,Credit,Status,Modified');
+		$query = $this->db->get('public.Project_Ideas');
+		$newquery = array();
+		foreach($query->result_array() as $row){
+			if(strstr($row['Credit'],$searchterm)){$newquery[] = $row;};
+		}
+		$this->webglobal['info_q'] = $newquery;
 		$this->load->view('header',$this->webglobal);
 		$this->load->view('menu',$this->webglobal);
-		$this->load->view('profileview',$this->webglobal);
+		$this->load->view('searchview',$this->webglobal);
 		$this->load->view('footer');
 	}
-	public function EditProject($user,$project){
+	public function Edit($project){
+		$this->load->library('form_validation');
+		$project = rawurldecode($project);
+		$this->db->select("Project_Acronym,Committee,Difficulty,Credit,Status,Info,Source,Related,Created,Modified,Project_Name");
+		$query = $this->db->get_where('public.Project_Ideas',array('Project_Name'=>$project));
+		$this->webglobal['info_q'] = $query;
+		if ($this->webglobal['info_q']->num_rows() == 0){
+			redirect('projects/error');
+		}
+		$this->form_validation->set_error_delimiters('<div class="alert alert-error">', '</div>');
+		$this->form_validation->set_rules('project_nick','Project Acronym','min_length[2]|max_length[8]|callback__invalidChar');
+		$this->form_validation->set_rules('project_name','Project Name','required|callback__invalidChar');
+		$this->form_validation->set_rules('committee[]','Committee','callback__committeeCheck|callback__invalidChar');
+		$this->form_validation->set_rules('info','Project Info','max_length[1000]|callback__invalidChar');
+		$this->form_validation->set_rules('difficulty','Difficulty','callback__difficultyForm|callback__invalidChar');
+		$this->form_validation->set_rules('source','Source','max_length[254]|prep_url|callback__invalidChar');
+		$this->form_validation->set_rules('status','Status','callback__statusForm|callback__invalidChar');
+		$this->form_validation->set_rules('team','Team','callback__invalidChar');
 		$this->webglobal['page_title'] = 'Edit '.$project;
 		$this->load->view('header',$this->webglobal);
 		$this->load->view('menu',$this->webglobal);
+		if($this->form_validation->run() == False){
+			$this->load->view('editview',$this->webglobal);
+		}else{
+			$this->load->view('editSubmit',$this->webglobal);
+		}
 		$this->load->view('footer');
 	}
 	public function NewProject(){
@@ -75,7 +99,7 @@ class projects extends CI_Controller {
 	}
 	public function _invalidChar($value){
 		$this->form_validation->set_message('_invalidChar', '%s has a invalid char');
-		return !preg_match("/[^A-Za-z0-9\,\'\.\+\-\&\\s\:\/]/", $value);
+		return !preg_match("/[^A-Za-z0-9\,\#\"\'\.\+\-\&\\s\:\/]/", $value);
 	}
 	public function _committeeCheck($value){
 		$this->form_validation->set_message('_committeeCheck', '%s has a non valid input');
@@ -148,7 +172,14 @@ class projects extends CI_Controller {
 			}
 			$this->load->view('footer');
 		}else{
-			$this->load->view('project404');
+			redirect('projects/error');
 		}
+	}
+	public function error(){
+		$this->webglobal['page_title'] = "404";
+		$this->load->view('header',$this->webglobal);
+		$this->load->view('menu',$this->webglobal);
+		$this->load->view('project404');
+		$this->load->view('footer');
 	}
 }

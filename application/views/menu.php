@@ -9,17 +9,17 @@
 	  <a class="brand" href="<?php echo base_url() ?>"><img style="width: 22px; height: 22px;" src="<?php echo base_url('/assets/img/csh_icon.png') ?>" class="img-rounded"></a>
 	  <div class="nav-collapse">
 		<ul class="nav">
-			<li><?php echo anchor('projects/viewall','Search All') ?></li>
-			<li><?php echo anchor('#','My Projects') ?></li>
+			<li><?php echo anchor('projects/viewall','List All') ?></li>
+			<li><?php echo anchor('projects/search/'.$username,'My Projects') ?></li>
 			<li><?php echo anchor('projects/NewProject','New Project') ?></li>
 		</ul>
 		<ul class="nav pull-right">
 			<li>
 				<form class="navbar-search">
-				<input type="text" data-provide="typeahead" data-source=[<?php echo $menuProjects ?>] placeholder="Quick Search">
+				<input type="text" placeholder="Quick Search">
 				</form>
 			</li>
-			<li><?php echo anchor('projects/profile/'.$username,"$realname ($username)") ?>
+			<li><?php echo anchor('projects/search/'.$username,"$realname ($username)") ?>
 		</ul>
 	  </div><!--/.nav-collapse -->
 	</div>
