@@ -13,7 +13,7 @@
 					<th></th>
 				</tr></thead>
 				<tbody>
-					<?php foreach($info_q as $row){ $this->profile->displayrow($row);} ?>
+					<?php foreach($info_q as $row){ $this->search->displayrow($row);} ?>
 				</tbody>
 			</table>
 		</div>
