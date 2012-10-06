@@ -33,14 +33,27 @@ class projects extends CI_Controller {
 		$this->load->view('viewall',$this->webglobal);
 		$this->load->view('footer');
 	}
-	public function Search($searchterm){
+	public function Search($searchterm,$sample){
 		$this->load->library('Search');
 		$this->webglobal['page_title'] = 'Search';
 		$this->db->select('Project_Name,Project_Acronym,Committee,Difficulty,Credit,Status,Modified');
 		$query = $this->db->get('public.Project_Ideas');
 		$newquery = array();
-		foreach($query->result_array() as $row){
-			if(strstr($row['Credit'],$searchterm)){$newquery[] = $row;};
+		if($sample == 'searchall'){
+			$searchterm = $_POST['search'];
+			foreach($query->result_array() as $row){
+				if(strstr($row['Project_Name'],$searchterm)){$newquery[] = $row;};
+				if(strstr($row['Project_Acronym'],$searchterm)){$newquery[] = $row;};
+				if(strstr($row['Committee'],$searchterm)){$newquery[] = $row;};
+				if(strstr($row['Credit'],$searchterm)){$newquery[] = $row;};
+				if(strstr($row['Status'],$searchterm)){$newquery[] = $row;};
+			}
+		}else{
+			foreach($query->result_array() as $row){
+				if($sample == 'credit'){
+					if(strstr($row['Credit'],$searchterm)){$newquery[] = $row;};
+				}
+			}
 		}
 		$this->webglobal['info_q'] = $newquery;
 		$this->load->view('header',$this->webglobal);

@@ -10,16 +10,16 @@
 	  <div class="nav-collapse">
 		<ul class="nav">
 			<li><?php echo anchor('projects/viewall','List All') ?></li>
-			<li><?php echo anchor('projects/search/'.$username,'My Projects') ?></li>
+			<li><?php echo anchor("projects/search/$username/credit",'My Projects') ?></li>
 			<li><?php echo anchor('projects/NewProject','New Project') ?></li>
 		</ul>
 		<ul class="nav pull-right">
 			<li>
-				<form class="navbar-search">
-				<input type="text" placeholder="Quick Search">
+				<?php echo form_open('projects/search/searchall/searchall',array('class'=>'navbar-search')) ?>
+				<input name='search' type="text" placeholder="Project Search">
 				</form>
 			</li>
-			<li><?php echo anchor('projects/search/'.$username,"$realname ($username)") ?>
+			<li><?php echo anchor("projects/search/$username/credit","$realname ($username)") ?>
 		</ul>
 	  </div><!--/.nav-collapse -->
 	</div>

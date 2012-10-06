@@ -1,3 +1,6 @@
+<?php function clean($data){
+	return preg_replace('/[\{\}]/','',$data);
+} ?>
 <div class='container'>
 	<?php echo form_open('projects/edit'); ?>
 	<div class='row-fluid'>
@@ -29,25 +32,25 @@
 			<?php echo form_error('committee[]'); ?>
 			<div class='control-group error'>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='OpComm' <?php echo set_checkbox("committee[]",'OpComm') ?> />OpComm
+				<input name="committee[]" type="checkbox" value='OpComm' <?php echo set_checkbox("committee[]",'OpComm') ?> <?php echo (strstr($info_q->row()->Committee,'OpComm')) ? 'checked ' : '' ?> />OpComm
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='R&D' <?php echo set_checkbox("committee[]",'R&D') ?>/>R&D
+				<input name="committee[]" type="checkbox" value='R&D' <?php echo set_checkbox("committee[]",'R&D') ?><?php echo (strstr($info_q->row()->Committee,'R&D')) ? 'checked ' : '' ?>/>R&D
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='Social' <?php echo set_checkbox('committee[]','Social') ?>/>Social
+				<input name="committee[]" type="checkbox" value='Social' <?php echo set_checkbox('committee[]','Social') ?><?php echo (strstr($info_q->row()->Committee,'Social')) ? 'checked ' : '' ?>/>Social
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='History' <?php echo set_checkbox('committee[]','History') ?>/>History
+				<input name="committee[]" type="checkbox" value='History' <?php echo set_checkbox('committee[]','History') ?><?php echo (strstr($info_q->row()->Committee,'History')) ? 'checked ' : '' ?>/>History
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='Eval' <?php echo set_checkbox('committee[]','Eval') ?>/>Eval
+				<input name="committee[]" type="checkbox" value='Eval' <?php echo set_checkbox('committee[]','Eval') ?><?php echo (strstr($info_q->row()->Committee,'Eval')) ? 'checked ' : '' ?>/>Eval
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='Financial' <?php echo set_checkbox('committee[]','Financial') ?>/>Financial
+				<input name="committee[]" type="checkbox" value='Financial' <?php echo set_checkbox('committee[]','Financial') ?><?php echo (strstr($info_q->row()->Committee,'Financial')) ? 'checked ' : '' ?>/>Financial
 			</label>
 			<label class="checkbox inline">
-				<input name="committee[]" type="checkbox" value='Other' <?php echo set_checkbox('committee[]','Other') ?>/>Other
+				<input name="committee[]" type="checkbox" value='Other' <?php echo set_checkbox('committee[]','Other') ?><?php echo (strstr($info_q->row()->Committee,'Other')) ? 'checked ' : '' ?>/>Other
 			</label>
 			</div>
 		</div>
@@ -59,7 +62,7 @@
 			<?php echo form_error('source'); ?>
 			<textarea class='span11' name="info" placeholder="Project Info" rows=3><?php echo $info_q->row()->Info ?></textarea>
 			<br />
-			<input class='span11' type="text" name="source" value='<?php echo $info_q->row()->Source ?>' placeholder="Source link">
+			<input class='span11' type="text" name="source" value='<?php echo clean($info_q->row()->Source) ?>' placeholder="Source link">
 		</div>
 		<div class='span6'>
 			<legend>Specific Information</legend>
@@ -80,12 +83,12 @@
 							"Old & Replaced" => "Old & Replaced",
 							"Broken & Forgotten" => "Broken & Forgotten",
 							"Cursed" => "Cursed");
-							echo form_dropdown('status',$options,set_value('status'),"id='inputWarning'") ?>
+							echo form_dropdown('status', $options,$info_q->row()->Status, "id='inputWarning'") ?>
 					</div>
 					<?php echo form_error('team'); ?>
 					<?php echo form_label('Team Members','team'); ?>
 					<div class='control-group error'>
-						<input id='inputWarning' class="text" type="text" name="team" placeholder="Team" value=<?php echo $info_q->row()->Credit ?>>
+						<input id='inputWarning' class="text" type="text" name="team" placeholder="Team" value=<?php echo clean($info_q->row()->Credit) ?>>
 					</div>
 				</div>
 				<div class='span6'>
@@ -97,22 +100,22 @@
 							switch($x){
 								case 0:
 									echo "<option ";
-									echo (set_value('difficulty') == $x) ? 'selected ' : '';
+									echo ($info_q->row()->Difficulty == $x) ? 'selected ' : '';
 									echo "value=$x>Unsure</option>";
 									break;
 								case 1:
 									echo "<option ";
-									echo (set_value('difficulty') == $x) ? 'selected ' : '';
+									echo ($info_q->row()->Difficulty == $x) ? 'selected ' : '';
 									echo "value=$x>$x - 30 second project</option>";
 									break;
 								case 10:
 									echo "<option ";
-									echo (set_value('difficulty') == $x) ? 'selected ' : '';
+									echo ($info_q->row()->Difficulty == $x) ? 'selected ' : '';
 									echo "value=$x>$x - Induces Panic Attacks</option>";
 									break;
 								default:
 									echo "<option ";
-									echo (set_value('difficulty') == $x) ? 'selected ' : '';
+									echo ($info_q->row()->Difficulty == $x) ? 'selected ' : '';
 									echo "value=$x>$x</option>";
 									break;
 							}
@@ -121,7 +124,7 @@
 					</div>
 					<?php echo form_error('related'); ?>
 					<?php echo form_label('Related Projects','related') ?>
-					<input type="text" name="related" value='<?php echo $info_q->row()->Related ?>' placeholder="Related Projects">
+					<input type="text" name="related" value='<?php echo clean($info_q->row()->Related) ?>' placeholder="Related Projects">
 				</div>
 			</div>
 		</div>
