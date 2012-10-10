@@ -42,16 +42,16 @@ class projects extends CI_Controller {
 		if($sample == 'searchall'){
 			$searchterm = $_POST['search'];
 			foreach($query->result_array() as $row){
-				if(strstr($row['Project_Name'],$searchterm)){$newquery[] = $row;};
-				if(strstr($row['Project_Acronym'],$searchterm)){$newquery[] = $row;};
-				if(strstr($row['Committee'],$searchterm)){$newquery[] = $row;};
-				if(strstr($row['Credit'],$searchterm)){$newquery[] = $row;};
-				if(strstr($row['Status'],$searchterm)){$newquery[] = $row;};
+				if(stristr($row['Project_Name'],$searchterm)){$newquery[] = $row;};
+				if(stristr($row['Project_Acronym'],$searchterm)){$newquery[] = $row;};
+				if(stristr($row['Committee'],$searchterm)){$newquery[] = $row;};
+				if(stristr($row['Credit'],$searchterm)){$newquery[] = $row;};
+				if(stristr($row['Status'],$searchterm)){$newquery[] = $row;};
 			}
 		}else{
 			foreach($query->result_array() as $row){
 				if($sample == 'credit'){
-					if(strstr($row['Credit'],$searchterm)){$newquery[] = $row;};
+					if(stristr($row['Credit'],$searchterm)){$newquery[] = $row;};
 				}
 			}
 		}
@@ -146,6 +146,11 @@ class projects extends CI_Controller {
 			}
 		}
 		return False;
+	}
+	public function deleteProject($project){
+		$project = rawurldecode($project);
+		$this->db->delete('Project_Ideas',array('Project_Name'=>"$project"));
+		redirect();
 	}
 	public function addComment(){
 		$data = array('User_Name' => $this->webglobal['username']);

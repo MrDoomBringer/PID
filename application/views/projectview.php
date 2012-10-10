@@ -16,6 +16,7 @@ switch ($status){
 		$status_color = 'success';
 		break;
 	case "Planning Phase":
+	case "Idea Phase":
 		$status_color = 'info';
 		break;
 	case "In Development":

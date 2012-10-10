@@ -7,6 +7,7 @@
 	<div class='span6'>
 		<h2>Project Edit Form</h2>
 		<input class='btn btn-primary' type='submit' value='Submit Project'/>
+		<a href='<?php echo base_url('projects/deleteProject/'.rawurlencode($info_q->row()->Project_Name)) ?>' class='btn btn-warning'>Delete</a>
 	</div>
 	<div class='span6'>
 	<p>
